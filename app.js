@@ -5,12 +5,17 @@ var logger = require('morgan');
 const cors = require('cors')
 const compression = require('compression')
 
-const mongoose = require('mongoose')
-const BASE_API_URL = 'http://localhost:1414'
-
-mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@localhost:27017/dragonfly`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
-    console.log('Connected to DB'))
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: '*****',
+  user: '*****',
+  password: '*******',
+  database: '*****'
+});
+connection.connect((err) => {
+  if (err) throw err;
+  console.log('Connected!');
+});
 
 require('dotenv/config')
 const MODE = process.env.MODE
@@ -38,7 +43,7 @@ app.use(cookieParser());
 // const secureAuth = async function (req, res, next) {
 //     const dragonflyToken = req.cookies["dragonfly-token"]
 //     const dragonflyAccount = await getDragonflyAccount(dragonflyToken)
-//     if (!dragonflyToken || !dragonflyAccount) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net');
+//     if (!dragonflyToken || !dragonflyAccount) return res.redirect('https://dragonflyreborn.github.io/web-core/login?ref=https://dragonflyreborn.github.io/dashboard');
 //     next()
 // }
 
